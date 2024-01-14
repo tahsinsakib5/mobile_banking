@@ -145,7 +145,7 @@ class HomePage extends StatelessWidget {
                                   imagename: "assets/send_money.png",
                                   title: "Send money",
                                   clik: () {
-                                    getData();
+                                    // getData();
                                   },
                                 ),
                               ],
