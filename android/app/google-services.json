@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "750130826880",
+    "project_id": "againagain-5c676",
+    "storage_bucket": "againagain-5c676.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750130826880:android:c07f7714b4123e01b26065",
+        "android_client_info": {
+          "package_name": "com.example.bankapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH3sBWcSADwTZuuqwFvYKSZC1dF-X15Oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
