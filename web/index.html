@@ -32,6 +32,31 @@
   <title>bankapp</title>
   <link rel="manifest" href="manifest.json">
 
+
+  <script>
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyD_5AicChQmFiak9-ugNmL7mZahkrB7Nxg",
+  authDomain: "againagain-5c676.firebaseapp.com",
+  projectId: "againagain-5c676",
+  storageBucket: "againagain-5c676.appspot.com",
+  messagingSenderId: "750130826880",
+  appId: "1:750130826880:web:a86edf0f8e9c124eb26065",
+  measurementId: "G-1HLFMENMQE"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+  </script>
+
   <script>
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = null;
