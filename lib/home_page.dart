@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
       ]),
       body: SafeArea(
         child: FutureBuilder(
-          future: getData(),
+          future: getData('user doc id'),
           builder: (context, snapshot) {
             // if(snapshot.hasData){
             return Stack(
