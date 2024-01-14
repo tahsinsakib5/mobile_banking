@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 12,
               ),
               //Number tow text field
-               Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
                   "User Frist Name",
@@ -87,11 +87,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding:  EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: TextField(
-                    controller:passwordcontrolar,
+                    controller: passwordcontrolar,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: TextField(
-                    controller:citycontrolar,
+                    controller: citycontrolar,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -168,6 +168,8 @@ class _LoginPageState extends State<LoginPage> {
               CustomButton(
                 button_text: "Sing in",
                 ontapp: () async {
+                  print(numbercontrolar.text);
+
                   await FirebaseAuth.instance.verifyPhoneNumber(
                       phoneNumber: numbercontrolar.text,
                       verificationCompleted: (e) {
@@ -186,33 +188,31 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       codeAutoRetrievalTimeout: (e) {});
 
-              //  String? userid = await singup();
-
-               
-              //  if(userid!=null){
-                    
-                        
-              //   Map<String,dynamic>data ={
-              //     "user_amount":200,
-              //     "user_name":numbercontrolar.text,
-              //     "name":passwordcontrolar.text,
-              //      "city":citycontrolar.text,
-              //   };
-
-              //   await userdata(userid, data);
-              //  }
-            
-
-
-              //   await Navigator.push(context,DialogRoute(context: context, builder:(context) =>HomePage()));
+                  //  String? userid = await singup();
+                  //  if(userid!=null){
+                  //   Map<String,dynamic>data ={
+                  //     "user_amount":200,
+                  //     "user_name":numbercontrolar.text,
+                  //     "name":passwordcontrolar.text,
+                  //      "city":citycontrolar.text,
+                  //   };
+                  //   await userdata(userid, data);
+                  //  }
+                  //   await Navigator.push(context,DialogRoute(context: context, builder:(context) =>HomePage()));
                 },
               ),
 
-              IconButton(onPressed: () {
-                // FirebaseAuth.instance.signOut();
-                
-                 Navigator.push(context,DialogRoute(context: context, builder:(context) =>HomePage()));
-              }, icon:Icon(Icons.abc_sharp))
+              IconButton(
+                  onPressed: () {
+                    // FirebaseAuth.instance.signOut();
+
+                    Navigator.push(
+                        context,
+                        DialogRoute(
+                            context: context,
+                            builder: (context) => const HomePage()));
+                  },
+                  icon: const Icon(Icons.abc_sharp))
             ],
           ),
         ),
@@ -221,16 +221,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future singup() async {
-var userid= await  FirebaseAuth.instance.createUserWithEmailAndPassword(
+    var userid = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: numbercontrolar.text, password: passwordcontrolar.text);
 
-     return userid.user!.uid;   
-}
+    return userid.user!.uid;
+  }
 
- Future userdata (String uid,Map<String,dynamic> data )async{
- await  FirebaseFirestore.instance.collection("User_data").doc(uid).set(data);
-
-  
- }
-
+  Future userdata(String uid, Map<String, dynamic> data) async {
+    await FirebaseFirestore.instance.collection("User_data").doc(uid).set(data);
+  }
 }
