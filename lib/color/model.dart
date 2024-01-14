@@ -1,6 +1,6 @@
-class getusermodel{
-  final int useramount;
+class UserModel {
+  final int userAmount;
   final String name;
 
-  getusermodel({required this.useramount, required this.name});
+  UserModel({required this.userAmount, required this.name});
 }
