@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
       ]),
       body: SafeArea(
         child: FutureBuilder(
-          future: getdata(),
+          future: getData(),
           builder: (context, snapshot) {
             // if(snapshot.hasData){
             return Stack(
@@ -145,7 +145,7 @@ class HomePage extends StatelessWidget {
                                   imagename: "assets/send_money.png",
                                   title: "Send money",
                                   clik: () {
-                                    getdata();
+                                    getData();
                                   },
                                 ),
                               ],
@@ -185,19 +185,34 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Future getdata() async {
-    List alluser = [];
-    var allUserData =
-        await FirebaseFirestore.instance.collection("User_data").get();
+  Future<UserModel?> getData(String docID) async {
+    // List alluser = [];
 
-    for (var doc in allUserData.docs) {
-      var amount = doc.get("user_name");
-      var name = doc.get("name");
-      print(name);
-      var data = UserModel(userAmount: amount, name: name);
-      alluser.add(data);
-      print(data.userAmount);
+    try {
+      var docSnap = await FirebaseFirestore.instance
+          .collection("User_data")
+          .doc(docID)
+          .get();
+
+      var userMap = docSnap.data();
+      if (userMap != null) {
+        return UserModel(
+            userAmount: userMap['user_name'], name: userMap['name']);
+      }
+    } catch (e) {
+      print(e);
     }
-    return alluser;
+
+    return null;
+
+    // for (var doc in docSnap.docs) {
+    //   var amount = doc.get("user_name");
+    //   var name = doc.get("name");
+    //   print(name);
+    //   var data = UserModel(userAmount: amount, name: name);
+    //   alluser.add(data);
+    //   print(data.userAmount);
+    // }
+    // return alluser;
   }
 }
