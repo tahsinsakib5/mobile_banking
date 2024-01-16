@@ -1,4 +1,4 @@
-import 'package:bankapp/athitication/mobil_number_login.dart';
+
 import 'package:bankapp/color/colors.dart';
 import 'package:bankapp/home_page.dart';
 import 'package:bankapp/widget/button.dart';
@@ -13,9 +13,9 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-final TextEditingController numbercontrolar = TextEditingController();
-final TextEditingController passwordcontrolar = TextEditingController();
-final TextEditingController lastnamecontrolar = TextEditingController();
+final TextEditingController Fristnamecontrolar = TextEditingController();
+final TextEditingController lasnamecontrolar = TextEditingController();
+final TextEditingController Professioncontrolar = TextEditingController();
 final TextEditingController citycontrolar = TextEditingController();
 
 class _LoginPageState extends State<LoginPage> {
@@ -52,36 +52,6 @@ class _LoginPageState extends State<LoginPage> {
               const Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
-                  "User Phone Number",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  child: TextField(
-                    controller: numbercontrolar,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide.none),
-                        isDense: true,
-                        contentPadding: const EdgeInsets.all(12),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "Number"),
-                  ),
-                ),
-              ),
-
-              const SizedBox(
-                height: 12,
-              ),
-              //Number tow text field
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
                   "User Frist Name",
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                 ),
@@ -91,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: TextField(
-                    controller: passwordcontrolar,
+                    controller:Fristnamecontrolar,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -100,14 +70,15 @@ class _LoginPageState extends State<LoginPage> {
                         contentPadding: const EdgeInsets.all(12),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: "Type Frist name"),
+                        hintText: "Frist Name"),
                   ),
                 ),
               ),
+
               const SizedBox(
                 height: 12,
               ),
-              // NUnmber three texfield
+              //Number tow text field
               const Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
@@ -120,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: TextField(
+                    controller:lasnamecontrolar,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -128,7 +100,36 @@ class _LoginPageState extends State<LoginPage> {
                         contentPadding: const EdgeInsets.all(12),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: "Type Last name"),
+                        hintText: "Last name"),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              // NUnmber three texfield
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "User Profesion",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: TextField(
+                    controller:Professioncontrolar,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none),
+                        isDense: true,
+                        contentPadding: const EdgeInsets.all(12),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: "PRofession"),
                   ),
                 ),
               ),
@@ -168,51 +169,30 @@ class _LoginPageState extends State<LoginPage> {
               CustomButton(
                 button_text: "Sing in",
                 ontapp: () async {
-                  print(numbercontrolar.text);
-
-                  await FirebaseAuth.instance.verifyPhoneNumber(
-                      phoneNumber: numbercontrolar.text,
-                      verificationCompleted: (e) {
-                        print(e);
-                      },
-                      verificationFailed: (e) {
-                        print(e);
-                      },
-                      codeSent: (String verificationId, int? token) async {
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MobileNumberLogin(
-                                  verifiacationId: verificationId),
-                            ));
-                      },
-                      codeAutoRetrievalTimeout: (e) {});
-
-                  //  String? userid = await singup();
-                  //  if(userid!=null){
-                  //   Map<String,dynamic>data ={
-                  //     "user_amount":200,
-                  //     "user_name":numbercontrolar.text,
-                  //     "name":passwordcontrolar.text,
-                  //      "city":citycontrolar.text,
-                  //   };
-                  //   await userdata(userid, data);
-                  //  }
-                  //   await Navigator.push(context,DialogRoute(context: context, builder:(context) =>HomePage()));
+                 
+                 try{
+                     var uid =   FirebaseAuth.instance.currentUser!.phoneNumber;
+                
+                   if(uid!=null){
+                    Map<String,dynamic>data ={
+                      "user_amount":200,
+                      "user_name":Fristnamecontrolar.text+lasnamecontrolar.text,
+                      "Profassion":Professioncontrolar.text,
+                       "city":citycontrolar.text,
+                    };
+                    await userdata(uid, data);
+                   }
+                    await Navigator.push(context,DialogRoute(context: context, builder:(context) =>HomePage()));
+                 }catch(e){
+                  print("some thing wrong");
+                 }
+                   
+                   
+            
                 },
               ),
 
-              IconButton(
-                  onPressed: () {
-                    // FirebaseAuth.instance.signOut();
-
-                    Navigator.push(
-                        context,
-                        DialogRoute(
-                            context: context,
-                            builder: (context) => const HomePage()));
-                  },
-                  icon: const Icon(Icons.abc_sharp))
+             
             ],
           ),
         ),
@@ -220,12 +200,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future singup() async {
-    var userid = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: numbercontrolar.text, password: passwordcontrolar.text);
 
-    return userid.user!.uid;
-  }
 
   Future userdata(String uid, Map<String, dynamic> data) async {
     await FirebaseFirestore.instance.collection("User_data").doc(uid).set(data);

@@ -1,13 +1,13 @@
-import 'dart:async';
+
 
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String texttitle;
   final String hinrtitle;
-  final ControllerCallback? controlar;
+  final TextEditingController controlar;
   const CustomTextField({
-    super.key, required this.hinrtitle, this.controlar, required this.texttitle,
+    super.key, required this.hinrtitle, required this.controlar, required this.texttitle,
   });
 
   @override

@@ -1,5 +1,8 @@
-import 'package:bankapp/athitication/login_page.dart';
+
+
+import 'package:bankapp/athitication/mobil_number_login.dart';
 import 'package:bankapp/color/colors.dart';
+import 'package:bankapp/home_page.dart';
 import 'package:bankapp/widget/button.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +41,7 @@ class StartPage extends StatelessWidget {
                     context,
                     DialogRoute(
                       context: context,
-                      builder: (context) => const LoginPage(),
+                      builder: (context) =>MobileNumberLogin()
                     ));
               },
             ),
@@ -47,7 +50,11 @@ class StartPage extends StatelessWidget {
             ),
             CustomButton(
               button_text: "Create Acount",
-              ontapp: () {},
+              ontapp: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context) =>HomePage(),));
+
+          
+              },
             ),
             const SizedBox(
               height: 40,

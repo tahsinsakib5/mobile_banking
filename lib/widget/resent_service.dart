@@ -1,5 +1,5 @@
 
-import 'package:bankapp/color/colors.dart';
+
 import 'package:bankapp/widget/service_container.dart';
 import 'package:flutter/material.dart';
 
