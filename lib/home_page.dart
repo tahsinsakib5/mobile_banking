@@ -5,6 +5,7 @@ import 'package:bankapp/send_money.dart';
 import 'package:bankapp/widget/resent_service.dart';
 import 'package:bankapp/widget/service_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -17,6 +18,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: pallet.primaryColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          getData("+8801830888045");
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -32,9 +34,9 @@ class HomePage extends StatelessWidget {
       ]),
       body: SafeArea(
         child: FutureBuilder(
-          future: getData('user doc id'),
+          future: getData("+8801830888045"),
           builder: (context, snapshot) {
-            // if(snapshot.hasData){
+            if(snapshot.hasData){
             return Stack(
               children: [
                 Column(
@@ -49,14 +51,14 @@ class HomePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                             Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Tahsin Sakib",
+                                    snapshot.data!.name,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                   ),
@@ -76,13 +78,13 @@ class HomePage extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: pallet.primaryColor,
                                   borderRadius: BorderRadius.circular(50)),
-                              child: Center(
+                              child:  Center(
                                   child: Text(
-                                "00\$",
+                                "${snapshot.data!.userAmount} \$",
                                 style: TextStyle(fontSize: 18),
                               )),
                             ),
-                            Text(
+                            const Text(
                               "Money",
                               style: TextStyle(color: pallet.primaryColor),
                             )
@@ -145,7 +147,7 @@ class HomePage extends StatelessWidget {
                                   imagename: "assets/send_money.png",
                                   title: "Send money",
                                   clik: () {
-                                    // getData();
+                                   FirebaseAuth.instance.signOut();
                                   },
                                 ),
                               ],
@@ -158,7 +160,7 @@ class HomePage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "Transaksi Tarekhir",
                               style: TextStyle(fontSize: 16),
                             ),
@@ -166,7 +168,7 @@ class HomePage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Column(
+                      const Column(
                         children: [Resent_Service(), Resent_Service()],
                       )
                     ],
@@ -174,11 +176,11 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             );
-            // }
+            }
 
-            // else{
-            //   return Center(child: CircularProgressIndicator());
-            // }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
           },
         ),
       ),
@@ -186,7 +188,7 @@ class HomePage extends StatelessWidget {
   }
 
   Future<UserModel?> getData(String docID) async {
-    // List alluser = [];
+  
 
     try {
       var docSnap = await FirebaseFirestore.instance
@@ -197,7 +199,8 @@ class HomePage extends StatelessWidget {
       var userMap = docSnap.data();
       if (userMap != null) {
         return UserModel(
-            userAmount: userMap['user_name'], name: userMap['name']);
+            userAmount: userMap['user_amount'], name: userMap['user_name']);
+            print(userMap['name']);
       }
     } catch (e) {
       print(e);
@@ -205,14 +208,6 @@ class HomePage extends StatelessWidget {
 
     return null;
 
-    // for (var doc in docSnap.docs) {
-    //   var amount = doc.get("user_name");
-    //   var name = doc.get("name");
-    //   print(name);
-    //   var data = UserModel(userAmount: amount, name: name);
-    //   alluser.add(data);
-    //   print(data.userAmount);
-    // }
-    // return alluser;
+ 
   }
 }

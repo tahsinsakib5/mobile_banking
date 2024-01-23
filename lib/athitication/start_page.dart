@@ -1,6 +1,8 @@
 
 
 import 'package:bankapp/athitication/mobil_number_login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:bankapp/color/colors.dart';
 import 'package:bankapp/home_page.dart';
 import 'package:bankapp/widget/button.dart';
@@ -64,4 +66,24 @@ class StartPage extends StatelessWidget {
       ),
     );
   }
+
+
+
+Future<UserCredential> signInWithGoogle() async {
+
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
+ 
 }

@@ -1,6 +1,8 @@
 import 'package:bankapp/color/colors.dart';
 import 'package:bankapp/widget/button.dart';
 import 'package:bankapp/widget/custom_textfield.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
@@ -77,7 +79,7 @@ class _Send_moneyState extends State<Send_money> {
                       height: 12,
                     ),
                     CustomTextField(
-                        hinrtitle: "Type your Password", texttitle: "Password",controlar:numberController),
+                        hinrtitle: "Type your Password", texttitle: "Password",controlar:passwordController),
                     const Spacer(),
                     CustomButton(
                       button_text: "Send Money",
@@ -97,10 +99,20 @@ class _Send_moneyState extends State<Send_money> {
   }
 
    Future <void> qrscren()async{
-    var qescren = await FlutterBarcodeScanner.scanBarcode("#fff6666", "cancel",true ,ScanMode.QR);
+    var qescren = await FlutterBarcodeScanner.scanBarcode("#ff6666", "cancel",true ,ScanMode.QR);
 
     setState(() {
       numberController.text=qescren;
     });
+   }
+
+   Future sentmoneyminus()async{
+   var collection = await FirebaseFirestore.instance.collection("userdata");
+
+   var docref = collection.doc(FirebaseAuth.instance.currentUser!.phoneNumber).get();
+
+    // var balance = docref.get("balasce"); 
+
+    
    }
 }
